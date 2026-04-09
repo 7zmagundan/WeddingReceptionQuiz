@@ -20,10 +20,14 @@ let current = 0;
 let playerName = "";
 let userAnswers = [];
 
+/* ------------------------------
+   ページ切り替え
+------------------------------ */
 function showPage(id) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 
+  // 結果ページ以外ではアニメーションを消す
   if (id !== "page-result") {
     const petal = document.getElementById("petal-container");
     const gold = document.getElementById("gold-container");
@@ -32,7 +36,9 @@ function showPage(id) {
   }
 }
 
-// ホーム → クイズ開始
+/* ------------------------------
+   ホーム → クイズ開始
+------------------------------ */
 document.getElementById("start-btn").addEventListener("click", () => {
   playerName = document.getElementById("player-name").value.trim();
   if (!playerName) {
@@ -45,7 +51,9 @@ document.getElementById("start-btn").addEventListener("click", () => {
   showPage("page-quiz");
 });
 
-// クイズ読み込み
+/* ------------------------------
+   クイズ読み込み
+------------------------------ */
 function loadQuiz() {
   const q = quizData[current];
   const questionEl = document.getElementById("quiz-question");
@@ -58,7 +66,9 @@ function loadQuiz() {
   badgeEl.textContent = `第 ${current + 1} / ${quizData.length} 問`;
 }
 
-// 回答処理
+/* ------------------------------
+   回答処理
+------------------------------ */
 document.querySelectorAll(".choice-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     userAnswers[current] = btn.dataset.choice;
@@ -72,7 +82,9 @@ document.querySelectorAll(".choice-btn").forEach(btn => {
   });
 });
 
-// 回答確認ページ
+/* ------------------------------
+   回答確認ページ
+------------------------------ */
 function showCheckPage() {
   const list = document.getElementById("answer-list");
   list.innerHTML = "";
@@ -97,7 +109,9 @@ function showCheckPage() {
   showPage("page-check");
 }
 
-// 最初からやり直す
+/* ------------------------------
+   最初からやり直す
+------------------------------ */
 document.getElementById("restart-btn").addEventListener("click", () => {
   current = 0;
   userAnswers = [];
@@ -105,17 +119,22 @@ document.getElementById("restart-btn").addEventListener("click", () => {
   showPage("page-quiz");
 });
 
-// 結果ページへ
+/* ------------------------------
+   結果ページへ
+------------------------------ */
 document.getElementById("to-result-btn").addEventListener("click", () => {
   showResult();
   history.pushState(null, null, location.href);
 });
 
+// 戻るボタン無効化
 window.addEventListener("popstate", () => {
   history.pushState(null, null, location.href);
 });
 
-// 花びら生成
+/* ------------------------------
+   花びら生成
+------------------------------ */
 function createPetals() {
   const container = document.getElementById("petal-container");
   if (!container) return;
@@ -131,7 +150,9 @@ function createPetals() {
   }
 }
 
-// 金箔生成
+/* ------------------------------
+   金箔生成
+------------------------------ */
 function createGold() {
   const container = document.getElementById("gold-container");
   if (!container) return;
@@ -148,28 +169,34 @@ function createGold() {
   }
 }
 
-// 結果表示
+/* ------------------------------
+   結果表示（花バッジのテーマ色連動）
+------------------------------ */
 function showResult() {
-  const card = document.getElementById("result-card");
   const flowerLabel = document.getElementById("flower-label");
+  const badge = document.getElementById("flower-badge");
+  const resultInner = document.querySelector(".result-inner");
 
-  card.classList.remove("theme-yellow", "theme-red", "theme-blue");
-  flowerLabel.classList.remove("label-yellow", "label-red", "label-blue");
+  // 既存テーマ削除
+  resultInner.classList.remove("result-yellow", "result-red", "result-blue");
+  badge.classList.remove("badge-yellow", "badge-red", "badge-blue");
 
   const [q1, q2, q3] = userAnswers;
 
   if (q1 === "B" && q2 === "B" && q3 === "A") {
-    card.classList.add("theme-yellow");
+    badge.classList.add("badge-yellow");
+    resultInner.classList.add("result-yellow");
     flowerLabel.textContent = "ガーベラ";
-    flowerLabel.classList.add("label-yellow");
+  
   } else if (q1 === "B" && q2 === "B" && q3 === "B") {
-    card.classList.add("theme-red");
+    badge.classList.add("badge-red");
+    resultInner.classList.add("result-red");
     flowerLabel.textContent = "カーネーション";
-    flowerLabel.classList.add("label-red");
+  
   } else {
-    card.classList.add("theme-blue");
+    badge.classList.add("badge-blue");
+    resultInner.classList.add("result-blue");
     flowerLabel.textContent = "ブルースター";
-    flowerLabel.classList.add("label-blue");
   }
 
   document.getElementById("result-message").textContent =
