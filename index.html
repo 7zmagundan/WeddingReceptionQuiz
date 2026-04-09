@@ -9,21 +9,39 @@
 <body>
 
   <!-- ① ホーム画面 -->
-  <section id="page-home" class="page active">
-    <h1>結婚式クイズ</h1>
-    <p>新郎新婦にまつわるクイズに挑戦しよう！</p>
+  <section id="page-home" class="page active home-page">
+    <div class="home-card">
 
-    <h2>ルール</h2>
-    <ul>
-      <li>全3問の2択クイズ</li>
-      <li>最後に結果画面が表示されます</li>
-      <li>スクショして司会者に見せてね</li>
-    </ul>
+      <!-- 豪華な花の装飾（6つ） -->
+      <div class="home-flower f1"></div>
+      <div class="home-flower f2"></div>
+      <div class="home-flower f3"></div>
+      <div class="home-flower f4"></div>
+      <div class="home-flower f5"></div>
+      <div class="home-flower f6"></div>
 
-    <label>あなたの名前</label>
-    <input type="text" id="player-name" placeholder="例：こういちろう">
+      <!-- 光の粒（bokeh） -->
+      <div class="bokeh b1"></div>
+      <div class="bokeh b2"></div>
+      <div class="bokeh b3"></div>
 
-    <button id="start-btn">クイズを始める</button>
+      <h1 class="home-title">Welcome to<br>Wedding Quiz</h1>
+      <p class="home-subtitle">新郎新婦にまつわるクイズに挑戦しよう！</p>
+
+      <div class="home-divider"></div>
+
+      <h2>ルール</h2>
+      <ul>
+        <li>全3問の2択クイズです</li>
+        <li>最後に結果画面が表示されます</li>
+        <li>スクショして司会者に見せてね</li>
+      </ul>
+
+      <label>あなたの名前</label>
+      <input type="text" id="player-name" placeholder="例：こういちろう">
+
+      <button class="gold-btn" id="start-btn">クイズを始める</button>
+    </div>
   </section>
 
   <!-- ② クイズ画面 -->
@@ -31,22 +49,46 @@
     <h2 id="quiz-question"></h2>
 
     <div class="choices">
-      <button class="choice-btn" data-choice="A" id="choiceA"></button>
-      <button class="choice-btn" data-choice="B" id="choiceB"></button>
+      <button class="choice-btn gold-btn" data-choice="A" id="choiceA"></button>
+      <button class="choice-btn gold-btn" data-choice="B" id="choiceB"></button>
     </div>
 
     <p id="quiz-progress"></p>
   </section>
 
-  <!-- ③ 結果画面 -->
+  <!-- ③ 回答確認ページ -->
+  <section id="page-check" class="page">
+    <h1>回答の確認</h1>
+
+    <div id="answer-list"></div>
+
+    <button class="gold-btn" id="restart-btn">最初からやり直す</button>
+    <button class="gold-btn" id="to-result-btn">結果を見る</button>
+  </section>
+
+  <!-- ④ 結果ページ -->
   <section id="page-result" class="page">
     <h1>結果発表</h1>
-    <p id="result-name"></p>
-    <p id="result-score"></p>
 
-    <p class="screenshot-msg">この画面をスクショして司会者に見せてね！</p>
+    <!-- 花びら -->
+    <div id="petal-container"></div>
 
-    <button id="restart-btn">もう一度挑戦する</button>
+    <!-- 金箔 -->
+    <div id="gold-container"></div>
+
+    <div class="tiktok-card" id="result-card">
+
+      <!-- 花の名前 -->
+      <p id="flower-label" class="flower-label"></p>
+
+      <!-- 丸型写真枠 -->
+      <div class="tiktok-photo-circle" id="photo-slot"></div>
+
+      <!-- メッセージ -->
+      <p id="result-message" class="tiktok-message"></p>
+
+      <p class="screenshot-msg">この画面をスクショして司会者に見せてね！</p>
+    </div>
   </section>
 
   <script src="script.js"></script>

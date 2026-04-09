@@ -1,57 +1,270 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: #fff8f0;
-  color: #333;
-}
-
+/* ------------------------------
+   ページレイヤー（画面遷移バグ完全修正）
+------------------------------ */
 .page {
   display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: inherit;
 }
-
 .page.active {
   display: block;
+  animation: fadeIn 0.6s ease;
 }
 
-h1, h2 {
+/* ------------------------------
+   ホーム画面（豪華ウェルカムボード）
+------------------------------ */
+.home-page {
+  background: linear-gradient(180deg, #fff8f8 0%, #ffeef7 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 28px;
+  padding: 32px 24px;
+  max-width: 480px;
+  width: 90%;
+  border: 3px solid #f7dce8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 豪華な花の装飾（6つ） */
+.home-flower {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #ffd6e8, #ffb6d6);
+  border-radius: 50%;
+  opacity: 0.35;
+  filter: blur(8px);
+}
+.f1 { top: -60px; left: -60px; }
+.f2 { top: -60px; right: -60px; }
+.f3 { bottom: -60px; left: -60px; }
+.f4 { bottom: -60px; right: -60px; }
+.f5 { top: 40%; left: -80px; }
+.f6 { top: 40%; right: -80px; }
+
+/* 光の粒（bokeh） */
+.bokeh {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(255,255,255,0));
+  border-radius: 50%;
+  filter: blur(6px);
+  opacity: 0.6;
+  animation: bokehFloat 6s infinite ease-in-out;
+}
+.b1 { top: 20%; left: 10%; }
+.b2 { top: 60%; right: 15%; animation-delay: 1s; }
+.b3 { top: 40%; left: 60%; animation-delay: 2s; }
+
+@keyframes bokehFloat {
+  0% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(-20px); opacity: 0.9; }
+  100% { transform: translateY(0); opacity: 0.6; }
+}
+
+/* タイトル */
+.home-title {
+  font-size: 34px;
+  font-weight: 800;
   text-align: center;
+  color: #b38b00;
+  margin-bottom: 12px;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #d4a94f, #f7e7b2, #d4a94f);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-button {
+.home-subtitle {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.home-divider {
+  width: 80px;
+  height: 4px;
+  background: #f7dce8;
+  border-radius: 999px;
+  margin: 15px auto 25px;
+}
+
+/* ------------------------------
+   豪華金色ボタン
+------------------------------ */
+.gold-btn {
   width: 100%;
   padding: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 18px;
-  border: none;
-  border-radius: 10px;
-  background: #ffb6c1;
-  color: #333;
+  border-radius: 12px;
+  border: 1px solid #d9b24d;
+  background: linear-gradient(135deg, #fceabb, #f8d778, #f5c85b);
+  color: #5a4500;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+  transition: 0.2s;
 }
 
-button:hover {
-  opacity: 0.9;
+.gold-btn:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  filter: brightness(1.08);
 }
 
-.choice-btn {
-  background: #ffe4e1;
+.gold-btn:active {
+  transform: scale(0.97);
 }
 
+/* 波紋エフェクト */
+.gold-btn:active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% { width: 5px; height: 5px; opacity: 0.8; }
+  100% { width: 300px; height: 300px; opacity: 0; }
+}
+
+/* ------------------------------
+   クイズ画面
+------------------------------ */
 .choices {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+/* ------------------------------
+   結果画面
+------------------------------ */
+.tiktok-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  border: 2px solid #e6c878;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-.screenshot-msg {
-  margin-top: 30px;
-  font-weight: bold;
+.flower-label {
   text-align: center;
-  color: #d9534f;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* 花名カラー連動 */
+.label-yellow { color: #8a6b00; }
+.label-red { color: #a33a3a; }
+.label-blue { color: #2a4a7a; }
+
+/* 丸型写真枠 */
+.tiktok-photo-circle {
+  width: 140px;
+  height: 140px;
+  background: #faf5e6;
+  border: 3px solid #d8b56a;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  overflow: hidden;
+}
+
+/* テーマ色 */
+.theme-yellow { background: #fff7c2; border-color: #e6c878; }
+.theme-red { background: #ffe0e0; border-color: #e68a8a; }
+.theme-blue { background: #e0f0ff; border-color: #8ab6e6; }
+
+/* ------------------------------
+   花びらアニメーション
+------------------------------ */
+#petal-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.petal {
+  position: absolute;
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #fff, #ffb6c1);
+  border-radius: 70% 30% 70% 30%;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(180deg); opacity: 0; }
+}
+
+/* ------------------------------
+   金箔アニメーション（豪華タイプB）
+------------------------------ */
+#gold-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.gold {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  background: linear-gradient(135deg, #f7e7b2, #d4a94f, #f7e7b2);
+  opacity: 0.9;
+  border-radius: 2px;
+  animation: sparkle linear forwards;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50vh) rotate(90deg) scale(1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(110vh) rotate(180deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------
+   フェードイン
+------------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
