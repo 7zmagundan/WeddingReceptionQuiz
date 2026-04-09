@@ -74,35 +74,37 @@
 
   <!-- ④ 結果ページ -->
   <section id="page-result" class="page result-page">
-    <div class="result-inner">
-      <h1 class="result-title">結果発表</h1>
 
-      <!-- 花びら -->
-      <div id="petal-container"></div>
+    <!-- ★ ここ全体をキャプチャする -->
+    <div id="result-capture-area" class="result-frame">
 
-      <!-- 金箔 -->
-      <div id="gold-container"></div>
+      <!-- ★ 中身は全部ここに入れる -->
+      <div class="result-inner">
 
-      <div class="tiktok-card" id="result-card">
+        <h1 class="result-title">結果発表</h1>
 
-        <!-- ✿ 豪華バッジ（形はそのまま） -->
+        <div id="petal-container"></div>
+        <div id="gold-container"></div>
+
         <div class="flower-label-wrapper" id="flower-badge">
           <span class="flower-label-icon">✿</span>
           <span id="flower-label" class="flower-label"></span>
           <span class="flower-label-icon">✿</span>
         </div>
 
-        <!-- 丸型写真枠 -->
         <div class="tiktok-photo-circle" id="photo-slot"></div>
 
-        <!-- メッセージ -->
         <p id="result-message" class="tiktok-message"></p>
+        <p id="result-time" class="result-time"></p>
 
         <p class="screenshot-msg">この画面をスクショして司会者に見せてね！</p>
+        <button id="save-image-btn" class="gold-btn">📸 結果を画像保存</button>
+
       </div>
     </div>
   </section>
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

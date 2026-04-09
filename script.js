@@ -19,6 +19,7 @@ const quizData = [
 let current = 0;
 let playerName = "";
 let userAnswers = [];
+let answerTime = "";
 
 /* ------------------------------
    ページ切り替え
@@ -27,7 +28,6 @@ function showPage(id) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 
-  // 結果ページ以外ではアニメーションを消す
   if (id !== "page-result") {
     const petal = document.getElementById("petal-container");
     const gold = document.getElementById("gold-container");
@@ -56,14 +56,12 @@ document.getElementById("start-btn").addEventListener("click", () => {
 ------------------------------ */
 function loadQuiz() {
   const q = quizData[current];
-  const questionEl = document.getElementById("quiz-question");
-  const badgeEl = document.getElementById("quiz-badge");
-
-  questionEl.textContent = q.question;
+  document.getElementById("quiz-question").textContent = q.question;
   document.getElementById("choiceA").textContent = q.A;
   document.getElementById("choiceB").textContent = q.B;
 
-  badgeEl.textContent = `第 ${current + 1} / ${quizData.length} 問`;
+  document.getElementById("quiz-badge").textContent =
+    `第 ${current + 1} / ${quizData.length} 問`;
 }
 
 /* ------------------------------
@@ -123,11 +121,23 @@ document.getElementById("restart-btn").addEventListener("click", () => {
    結果ページへ
 ------------------------------ */
 document.getElementById("to-result-btn").addEventListener("click", () => {
+
+  // ★ 可愛い日時フォーマット
+  const now = new Date();
+  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+  const w = weekdays[now.getDay()];
+
+  answerTime =
+    `${now.getFullYear()}.` +
+    `${String(now.getMonth()+1).padStart(2,"0")}.` +
+    `${String(now.getDate()).padStart(2,"0")}（${w}） ` +
+    `${String(now.getHours()).padStart(2,"0")}:` +
+    `${String(now.getMinutes()).padStart(2,"0")}`;
+
   showResult();
   history.pushState(null, null, location.href);
 });
 
-// 戻るボタン無効化
 window.addEventListener("popstate", () => {
   history.pushState(null, null, location.href);
 });
@@ -170,40 +180,76 @@ function createGold() {
 }
 
 /* ------------------------------
-   結果表示（花バッジのテーマ色連動）
+   結果表示
 ------------------------------ */
 function showResult() {
   const flowerLabel = document.getElementById("flower-label");
   const badge = document.getElementById("flower-badge");
   const resultInner = document.querySelector(".result-inner");
+  const capture = document.getElementById("result-capture-area");
 
-  // 既存テーマ削除
   resultInner.classList.remove("result-yellow", "result-red", "result-blue");
   badge.classList.remove("badge-yellow", "badge-red", "badge-blue");
 
   const [q1, q2, q3] = userAnswers;
 
+  /* ------------------------------
+     ★ 背景色をキャプチャ範囲に完全コピー
+     （単色 + グラデーションの二重付与）
+  ------------------------------ */
   if (q1 === "B" && q2 === "B" && q3 === "A") {
     badge.classList.add("badge-yellow");
     resultInner.classList.add("result-yellow");
     flowerLabel.textContent = "ガーベラ";
-  
+
+    capture.style.background = "#fff8d1";
+    capture.style.backgroundImage =
+      "linear-gradient(180deg, #fff8d1, #ffe89a)";
+
   } else if (q1 === "B" && q2 === "B" && q3 === "B") {
     badge.classList.add("badge-red");
     resultInner.classList.add("result-red");
     flowerLabel.textContent = "カーネーション";
-  
+
+    capture.style.background = "#ffe5e5";
+    capture.style.backgroundImage =
+      "linear-gradient(180deg, #ffe5e5, #ffb3b3)";
+
   } else {
     badge.classList.add("badge-blue");
     resultInner.classList.add("result-blue");
     flowerLabel.textContent = "ブルースター";
+
+    capture.style.background = "#e6f3ff";
+    capture.style.backgroundImage =
+      "linear-gradient(180deg, #e6f3ff, #bcdcff)";
   }
 
   document.getElementById("result-message").textContent =
     `${playerName} さん、クイズにご協力いただきありがとうございました。` +
     ` 今日の楽しい時間を一緒に盛り上げてくださり、とても嬉しいです。`;
 
+  document.getElementById("result-time").textContent =
+    `回答日時：${answerTime}`;
+
   createPetals();
   createGold();
   showPage("page-result");
 }
+
+/* ------------------------------
+   画像保存（html2canvas）
+------------------------------ */
+document.getElementById("save-image-btn").addEventListener("click", () => {
+  const target = document.getElementById("result-capture-area");
+
+  html2canvas(target, {
+    scale: 2,
+    backgroundColor: null  // ← 透明補正を無効化
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "quiz_result.png";
+    link.click();
+  });
+});
