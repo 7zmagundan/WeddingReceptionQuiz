@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>結婚式クイズ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ① ホーム画面 -->
+  <section id="page-home" class="page active">
+    <h1>結婚式クイズ</h1>
+    <p>新郎新婦にまつわるクイズに挑戦しよう！</p>
+
+    <h2>ルール</h2>
+    <ul>
+      <li>全3問の2択クイズ</li>
+      <li>最後に結果画面が表示されます</li>
+      <li>スクショして司会者に見せてね</li>
+    </ul>
+
+    <label>あなたの名前</label>
+    <input type="text" id="player-name" placeholder="例：こういちろう">
+
+    <button id="start-btn">クイズを始める</button>
+  </section>
+
+  <!-- ② クイズ画面 -->
+  <section id="page-quiz" class="page">
+    <h2 id="quiz-question"></h2>
+
+    <div class="choices">
+      <button class="choice-btn" data-choice="A" id="choiceA"></button>
+      <button class="choice-btn" data-choice="B" id="choiceB"></button>
+    </div>
+
+    <p id="quiz-progress"></p>
+  </section>
+
+  <!-- ③ 結果画面 -->
+  <section id="page-result" class="page">
+    <h1>結果発表</h1>
+    <p id="result-name"></p>
+    <p id="result-score"></p>
+
+    <p class="screenshot-msg">この画面をスクショして司会者に見せてね！</p>
+
+    <button id="restart-btn">もう一度挑戦する</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

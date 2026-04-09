@@ -1,0 +1,57 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #fff8f0;
+  color: #333;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #ffb6c1;
+  color: #333;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.choice-btn {
+  background: #ffe4e1;
+}
+
+.choices {
+  margin-top: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.screenshot-msg {
+  margin-top: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #d9534f;
+}
