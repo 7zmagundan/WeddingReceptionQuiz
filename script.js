@@ -192,11 +192,14 @@ function showResult() {
   badge.classList.remove("badge-yellow", "badge-red", "badge-blue");
 
   const [q1, q2, q3] = userAnswers;
+  const photo = document.getElementById("photo-slot");
 
   /* ------------------------------
      ★ 背景色をキャプチャ範囲に完全コピー
      （単色 + グラデーションの二重付与）
   ------------------------------ */
+
+  /* 黄色（ガーベラ） */
   if (q1 === "B" && q2 === "B" && q3 === "A") {
     badge.classList.add("badge-yellow");
     resultInner.classList.add("result-yellow");
@@ -206,6 +209,10 @@ function showResult() {
     capture.style.backgroundImage =
       "linear-gradient(180deg, #fff8d1, #ffe89a)";
 
+    // ★ 写真セット
+    photo.style.backgroundImage = "url('./assets/images/img_result-yellow.jpg')";
+
+  /* 赤（カーネーション） */
   } else if (q1 === "B" && q2 === "B" && q3 === "B") {
     badge.classList.add("badge-red");
     resultInner.classList.add("result-red");
@@ -215,6 +222,10 @@ function showResult() {
     capture.style.backgroundImage =
       "linear-gradient(180deg, #ffe5e5, #ffb3b3)";
 
+    // ★ 写真セット
+    photo.style.backgroundImage = "url('./assets/images/img_result-red.jpg')";
+
+  /* 青（ブルースター） */
   } else {
     badge.classList.add("badge-blue");
     resultInner.classList.add("result-blue");
@@ -223,11 +234,15 @@ function showResult() {
     capture.style.background = "#e6f3ff";
     capture.style.backgroundImage =
       "linear-gradient(180deg, #e6f3ff, #bcdcff)";
+
+    // ★ 写真セット
+    photo.style.backgroundImage = "url('./assets/images/img_result-blue.jpg')";
   }
 
   document.getElementById("result-message").textContent =
-    `${playerName} さん、クイズにご協力いただきありがとうございました。` +
-    ` 今日の楽しい時間を一緒に盛り上げてくださり、とても嬉しいです。`;
+    `${playerName} さん\nクイズにご協力いただきありがとうございました。\n` +
+    ` 皆さまの回答をもとに\n余興で楽しく答え合わせを行います。\n` +
+    ` どうぞ楽しみにしていてください。`;
 
   document.getElementById("result-time").textContent =
     `回答日時：${answerTime}`;

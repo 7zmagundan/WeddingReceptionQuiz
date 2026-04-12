@@ -36,17 +36,83 @@ body {
 .home-page {
   background: transparent;
 }
+/* タイトル・サブタイトル・ルール見出し・名前ラベルに白縁取り */
+.home-title,
+.home-subtitle,
+.home-card h2,
+.input-label {
+  text-shadow:
+    0 0 4px rgba(255,255,255,1),
+    0 0 8px rgba(255,255,255,1),
+    0 0 12px rgba(255,255,255,0.95);
+}
 
 .home-card {
-  background: rgba(255, 255, 255, 0.96);
+  position: relative;
+  overflow: hidden;
+
+  /* 背景写真 */
+  background-image: url("./assets/images/home_photo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* 元のデザイン */
   border-radius: 28px;
   padding: 32px 24px 28px;
   max-width: 480px;
   width: 90%;
   border: 3px solid #f7dce8;
   box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* ★ 上だけ白グラデーション（強→弱） */
+.home-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.90) 0%,   /* ← タイトル部分はしっかり白 */
+    rgba(255,255,255,0.75) 35%,  /* ← ルールのあたりで少し薄く */
+    rgba(255,255,255,0.40) 70%,  /* ← 写真の雰囲気が出てくる */
+    rgba(255,255,255,0.15) 100%  /* ← 下はほぼ写真のまま */
+  );
+  z-index: 0;
+}
+
+/* ★ 中身を前面に出す */
+.home-card > * {
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+}
+/* ルール背景（少し濃く）
+.rules-block {
+  background: rgba(255,255,255,0.32);
+  padding: 12px 16px;
+  border-radius: 14px;
+} */
+
+/* ルール文字に白い縁取り */
+.rules-block,
+.rules-block li,
+.rules-block p {
+  text-shadow:
+    0 0 4px rgba(255,255,255,1),
+    0 0 8px rgba(255,255,255,1),
+    0 0 12px rgba(255,255,255,0.95);
+}
+
+/* 文字色を上品なブラウンに */
+.rules-block,
+.rules-block li {
+  color: #4a3b2f;
+}
+
+
+@keyframes bgFade {
+  0% { background-size: 110%; opacity: 0; }
+  100% { background-size: 100%; opacity: 1; }
 }
 
 /* 花の装飾 */
@@ -388,7 +454,9 @@ body {
 .tiktok-photo-circle {
   width: 140px;
   height: 140px;
-  background: #faf5e6;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 3px solid #d8b56a;
   border-radius: 50%;
   margin: 0 auto 20px;
@@ -494,4 +562,8 @@ body {
 }
 .tiktok-card {
   background: transparent !important;
+}
+#result-message {
+  text-align: center;
+  white-space: pre-line;
 }
