@@ -538,6 +538,9 @@ body {
   position: relative;
   padding: 28px 20px;
   border-radius: 24px;
+  max-width: 420px; /* ← ここがポイント（あなたのカード幅に合わせる） */
+  width: 100%;
+  margin: 0 auto;
 
   background:  #ffffff !important;
 
@@ -549,6 +552,8 @@ body {
 }
 
 .result-time {
+  display: block;     /* ← 横幅が広がる */
+  width: 100%;        /* ← カード幅いっぱいに */
   font-size: 13px;
   text-align: center;
   color: #b38b00;

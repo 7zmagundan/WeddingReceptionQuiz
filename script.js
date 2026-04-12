@@ -240,12 +240,12 @@ function showResult() {
   }
 
   document.getElementById("result-message").textContent =
-    `${playerName} さん\nクイズにご協力いただきありがとうございました。\n` +
+    `${playerName} さん\nクイズにご協力いただき\nありがとうございました。\n` +
     ` 皆さまの回答をもとに\n余興で楽しく答え合わせを行います。\n` +
     ` どうぞ楽しみにしていてください。`;
 
   document.getElementById("result-time").textContent =
-    `回答日時：${answerTime}`;
+    `回答日時：${answerTime}`.replace(/\s+/g, "");
 
   createPetals();
   createGold();
